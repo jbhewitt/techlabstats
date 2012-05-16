@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @stat.name %>
+</p>
+
+<p>
+  <b>Fileupload:</b>
+  <%= @stat.fileupload %>
+</p>
+
+
+<%= link_to 'Edit', edit_stat_path(@stat) %> |
+<%= link_to 'Back', stats_path %>
