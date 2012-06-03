@@ -1,5 +1,13 @@
 Techlabstats::Application.routes.draw do
-  resources :stats
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  devise_for :users
+
+  resources :histories
+
+  resources :stats 
+
+  match '/stats/:id/import', :controller => :stats, :action => :import
 
   resources :machines
 

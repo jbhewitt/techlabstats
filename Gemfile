@@ -10,8 +10,11 @@ gem 'sqlite3'
 gem 'carrierwave'
 gem 'simple_form'
 gem 'mysql2'
-
-
+gem 'capistrano'
+gem 'chronic'
+gem 'rails_admin'
+gem 'rails-footnotes', '>= 3.7.5.rc4', :group => :development
+gem 'delayed_job_active_record'
 
 
 # Gems used only for assets and not required
@@ -45,3 +48,6 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+
+gem "devise"

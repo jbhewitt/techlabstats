@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  window: MyString
+  process: MyString
+  time: 2012-05-21
+
+two:
+  window: MyString
+  process: MyString
+  time: 2012-05-21

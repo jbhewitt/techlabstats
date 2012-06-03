@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Window:</b>
+  <%= @history.window %>
+</p>
+
+<p>
+  <b>Process:</b>
+  <%= @history.process %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @history.time %>
+</p>
+
+
+<%= link_to 'Edit', edit_history_path(@history) %> |
+<%= link_to 'Back', histories_path %>
