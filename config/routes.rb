@@ -7,9 +7,15 @@ Techlabstats::Application.routes.draw do
 
   resources :stats 
 
+  resources :calendars
+
   match '/stats/:id/import', :controller => :stats, :action => :import
 
   resources :machines
+  match '/machines/:id/usage', :controller => :machines, :action => :usage
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

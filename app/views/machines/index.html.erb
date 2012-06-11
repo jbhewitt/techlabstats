@@ -4,14 +4,12 @@
   <tr>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
 <% @machines.each do |machine| %>
   <tr>
+    <td><%= link_to machine.name, machine %></td>
     <td><%= link_to 'Show', machine %></td>
-    <td><%= link_to 'Edit', edit_machine_path(machine) %></td>
-    <td><%= link_to 'Destroy', machine, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>

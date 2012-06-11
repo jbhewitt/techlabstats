@@ -1,0 +1,19 @@
+<h1>Search for usage</h1>
+
+<%= simple_form_for(@search) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :machine %>
+    <%= f.input :date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+
+<div id="usages">
+  <%= render @usage %>
+</div>

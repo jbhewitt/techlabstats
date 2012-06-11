@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120603225955) do
+ActiveRecord::Schema.define(:version => 20120604034844) do
+
+  create_table "applications", :force => true do |t|
+    t.string   "name"
+    t.string   "process"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "calendars", :force => true do |t|
+    t.date     "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -35,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20120603225955) do
     t.datetime "time"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "machine_id"
   end
 
   create_table "machines", :force => true do |t|
@@ -61,6 +75,18 @@ ActiveRecord::Schema.define(:version => 20120603225955) do
     t.string   "fileupload"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "machine_id"
+  end
+
+  create_table "usages", :force => true do |t|
+    t.string   "name"
+    t.date     "date"
+    t.integer  "minutes"
+    t.integer  "application_id"
+    t.integer  "machine_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "calendar_id"
   end
 
   create_table "users", :force => true do |t|

@@ -1,0 +1,3 @@
+class UsagesController < ApplicationController
+  
+end

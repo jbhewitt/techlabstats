@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Usage stats for <%= @machine.name %></h1>
+
+
+
+
+<% @usages.each do |usage| %>
+  <p><%= usage.application.name %> - <%= usage.minutes %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_machine_path(@machine) %> |
+<%= link_to 'Back', machines_path %>

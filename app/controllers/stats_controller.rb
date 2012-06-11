@@ -3,8 +3,6 @@ class StatsController < ApplicationController
   # GET /stats.json
 
 
-
-
   def index
     @stats = Stat.all
 
@@ -27,38 +25,10 @@ class StatsController < ApplicationController
 
   def import
     @stat = Stat.find(params[:id])
-
-    #decompress 7zip file
-    #system "7z -y x #{Rails.root}/public#{@stat.fileupload}"
-    
-    require 'sqlite3'
-
-    db = SQLite3::Database.open( "upload.dat" )
-    columns, *rows = db.execute2( "select * from snapshot" )
-
-    # snapshot rows = 
-    # 0 = "id", 1 = "time", 2 = "window", 3 = "process", 4 = "user"]
-
-    columns = nil
-    db.execute2( "select * from snapshot" ) do |row|
-    if columns.nil?
-        columns = row
-      else
-        time = Chronic.parse(row[1])
-        #time = row[1]
-        history = History.find_or_create_by_time(time)
-        history.window = row[2]
-        history.process = row[3]
-        history.save
-      # process row
-      @test = time
-      end
-    end
+    @stat.import_wam_db
 
   #test = db.get_first_row( "select * from snapshot" )
   #puts test.inspect
-
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @stat }
