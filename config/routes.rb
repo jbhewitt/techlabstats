@@ -13,8 +13,9 @@ Techlabstats::Application.routes.draw do
 
   resources :machines
   match '/machines/:id/usage', :controller => :machines, :action => :usage
+  match '/machines/:id/daily_usage', :controller => :machines, :action => :daily_usage
 
-
+  resources :daily_usages
 
 
   # The priority is based upon order of creation:

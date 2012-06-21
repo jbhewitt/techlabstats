@@ -17,7 +17,7 @@ gem 'rails_admin'
 gem 'rails-footnotes', '>= 3.7.5.rc4', :group => :development
 gem 'delayed_job_active_record'
 gem 'pry', :group => :development
-
+gem 'spreadsheet'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -155,6 +155,7 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     remotipart (1.0.2)
+    ruby-ole (1.2.11.3)
     sass (3.1.18)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -164,6 +165,8 @@ GEM
       actionpack (~> 3.0)
       activemodel (~> 3.0)
     slop (2.4.4)
+    spreadsheet (0.7.2)
+      ruby-ole (>= 1.0)
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -206,6 +209,7 @@ DEPENDENCIES
   rails_admin
   sass-rails (~> 3.2.3)
   simple_form
+  spreadsheet
   sqlite3
   therubyracer
   twitter-bootstrap-rails

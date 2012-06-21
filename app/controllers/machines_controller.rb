@@ -36,5 +36,18 @@ class MachinesController < ApplicationController
     end
   end
 
+    # GET /machines/1
+  # GET /machines/1.json
+  def daily_usage
+    @machine = Machine.find(params[:id])
+    
+    day = DateTime.new(2012,06,10)
+    @machine.gen_daily_user_usage(day)
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+  end
+
+
 
 end

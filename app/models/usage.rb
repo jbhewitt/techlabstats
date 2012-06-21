@@ -3,6 +3,5 @@ class Usage < ActiveRecord::Base
 
   belongs_to :machine
   belongs_to :application
-  belongs_to :calendar
 
 end

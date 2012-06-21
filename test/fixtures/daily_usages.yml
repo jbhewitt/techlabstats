@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  users: 1
+  application_id: 1
+  machine_id: 1
+  calendar_id: 1
+
+two:
+  name: MyString
+  users: 1
+  application_id: 1
+  machine_id: 1
+  calendar_id: 1

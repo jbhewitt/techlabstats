@@ -3,11 +3,25 @@ class Stat < ActiveRecord::Base
   
   mount_uploader :fileupload, FileUploader
 
-  attr_accessible :fileupload, :name, :machine_id, :remove_fileupload, :fileupload_cache
-  validates_presence_of :machine_id
+  attr_accessible :fileupload, :name, :machine_id, :remove_fileupload, :fileupload_cache, :processed
+  #validates_presence_of :machine_id
   validates_presence_of :fileupload
 
   belongs_to :machine
+
+  before_create :upcase_name
+  before_create :check_machine
+
+  def upcase_name
+    self.name = self.name.upcase
+  end
+
+  def check_machine
+    if self.machine.nil?
+      machine = Machine.find_or_create_by_name(self.name)
+      self.machine = machine
+    end
+  end
 
   def import_wam_db
     require 'sqlite3'

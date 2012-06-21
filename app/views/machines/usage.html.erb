@@ -2,9 +2,6 @@
 
 <h1>Usage stats for <%= @machine.name %></h1>
 
-
-
-
 <% @usages.each do |usage| %>
   <p><%= usage.application.name %> - <%= usage.minutes %></p>
 <% end %>

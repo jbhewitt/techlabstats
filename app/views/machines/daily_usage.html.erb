@@ -1,0 +1,31 @@
+<h1>daily usage</h1>
+<br/>
+
+
+<div class="field">
+<b>Start Date</b><br />
+<%= date_select :startDate, options = {:order => [:day, :month, :year]} %>
+</div>
+
+<div class="field">
+<b>End Date</b><br />
+<%= date_select :endDate, options = {:order => [:day, :month, :year]} %>
+</div>
+
+<%= form_for(@machine) do |f| %>
+  <% if @machine.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@machine.errors.count, "error") %> prohibited this machine from being saved:</h2>
+
+      <ul>
+      <% @machine.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
