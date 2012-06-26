@@ -11,7 +11,7 @@ namespace :report do
     
     today = DateTime.now 
     today = today - 1
-    today = DateTime.new(2012,06,21)
+    #today = DateTime.new(2012,06,21)
     beginning_of_week = today.beginning_of_week 
     end_of_week = today.end_of_week
 
@@ -23,14 +23,12 @@ namespace :report do
 
     sheet1[0,0] = 'MACHINE'
 
-
     while day_of_week < number_of_days      
       day = beginning_of_week + day_of_week
       column_no = day_of_week + 1
 
       #set top row date
       sheet1[0,column_no] = day.strftime("%d-%m-%Y") 
-
 
       weekly_process = Hash.new
       machines.each_with_index do |machine, index|
@@ -42,7 +40,6 @@ namespace :report do
         sheet1[row_no,0] = machine.name
         sheet1[row_no,column_no] = idle_usage
         puts "#{machine.name} - #{day_of_week} - #{idle_usage}"
-
         
         #cycle throw processes
         processes = daily_usage['process']
