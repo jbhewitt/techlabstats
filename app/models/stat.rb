@@ -40,8 +40,7 @@ class Stat < ActiveRecord::Base
       else
         time = Chronic.parse(row[1])
         #time = row[1]
-        history = History.find_or_create_by_time(time)
-        history.machine = self.machine
+        history = History.find_or_create_by_time_and_machine_id(time,self.machine.id)
         history.window = row[2]
         history.process = row[3]
         history.save
