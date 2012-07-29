@@ -11,7 +11,7 @@ namespace :report do
     
     today = DateTime.now 
     today = today - 1
-    #today = DateTime.new(2012,06,21)
+    today = DateTime.new(2012,06,21)
     beginning_of_week = today.beginning_of_week 
     end_of_week = today.end_of_week
 
