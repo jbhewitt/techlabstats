@@ -9,15 +9,17 @@ namespace :report do
     sheet = Hash.new
     sheet1 = book.create_worksheet :name => 'USER USAGE'
     
-    today = DateTime.now 
-    today = today - 1
-    today = DateTime.new(2012,06,21)
-    beginning_of_week = today.beginning_of_week 
-    end_of_week = today.end_of_week
+    today = DateTime.now
+    today = DateTime.civil(2012,7,20,0,0,0,0)
+    target_week = today - 7 
+    #today = today - 2
+    #today = Chronic.parse('2012-09-13')
+    beginning_of_week = target_week.beginning_of_week 
+    end_of_week = target_week.end_of_week
 
     machines = Machine.find(:all)
 
-    puts "Week Number #{today.cweek}"
+    puts "Week Number #{target_week.cweek}"
     number_of_days = end_of_week - beginning_of_week
     day_of_week = 0
 
@@ -52,8 +54,8 @@ namespace :report do
               #setup sheet basics
               sheet[machine.name] = book.create_worksheet :name => machine.name
               sheet[machine.name][0,0] = machine.name
-              sheet[machine.name][0,3] = "WEEK #{today.cweek}"
-              sheet[machine.name][0,4] = "YEAR #{today.cwyear}"
+              sheet[machine.name][0,3] = "WEEK #{target_week.cweek}"
+              sheet[machine.name][0,4] = "YEAR #{target_week.cwyear}"
               sheet[machine.name][1,0] = "PROCESS"
               sheet[machine.name][1,1] = "MINUTES USED"
             end
@@ -68,7 +70,7 @@ namespace :report do
       day_of_week += 1 
     end
 
-    book.write "#{Rails.root}/public/reports/TECHLAB-#{today.cwyear}-WEEK#{today.cweek}.xls"
+    book.write "#{Rails.root}/public/reports/TECHLAB-#{target_week.cwyear}-WEEK#{target_week.cweek}.xls"
   end
 
   def test123
