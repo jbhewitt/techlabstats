@@ -11,17 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618035354) do
+ActiveRecord::Schema.define(:version => 20120903001932) do
 
   create_table "applications", :force => true do |t|
     t.string   "name"
     t.string   "process"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "classification_id"
   end
 
   create_table "calendars", :force => true do |t|
     t.date     "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "classifications", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -61,10 +68,18 @@ ActiveRecord::Schema.define(:version => 20120618035354) do
     t.integer  "machine_id"
   end
 
-  create_table "machines", :force => true do |t|
+  create_table "locations", :force => true do |t|
     t.string   "name"
+    t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "machines", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "location_id"
   end
 
   create_table "rails_admin_histories", :force => true do |t|
