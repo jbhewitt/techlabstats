@@ -61,21 +61,22 @@ class Stat < ActiveRecord::Base
 
         time_difference = time - last_import_time
         if time_difference > 0           
-          #puts "#{self.machine.name} | #{time}"
+                  #puts "#{self.machine.name} | #{time}"
 
-          history = History.find_or_create_by_time_and_machine_id(time,self.machine.id)
-          if history.process.nil?
-            history.window = row[2]
-            history.process = row[3]
-            history.save
-            puts "#{self.machine.name} | #{time} | SAVING HISTORY FOR #{history.process}"
-          end
+          history = History.find_or_create_by_time_and_machine_id_and_window_and_process(time,self.machine.id,row[2],row[3])
+#          if history.process.nil?
+ #           history.window = row[2]
+  #          history.process = row[3]
+   #         history.save
+   #       end
           #import application name
-          app = Application.find_or_create_by_process(history.process)
-          if (app.name.nil?)
-            app.name = history.process.split('\\').last
-            app.save
-          end
+          h_app_name = history.process.split('\\').last
+          app = Application.find_or_create_by_process_and_name(history.process,h_app_name)
+#          if (app.name.nil?)
+ #           app.name = history.process.split('\\').last
+  #          app.save
+  #        end
+            puts "#{self.machine.name} | #{time} | SAVING HISTORY FOR #{history.process}"
         end
       end
     

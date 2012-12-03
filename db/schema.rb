@@ -11,15 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120903001932) do
+ActiveRecord::Schema.define(:version => 20121023015333) do
 
   create_table "applications", :force => true do |t|
     t.string   "name"
-    t.string   "process"
+    t.text     "process"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "classification_id"
   end
+
+  add_index "applications", ["name"], :name => "index_applications_on_name"
+  add_index "applications", ["process"], :name => "index_applications_on_process"
 
   create_table "calendars", :force => true do |t|
     t.date     "date"
@@ -60,13 +63,18 @@ ActiveRecord::Schema.define(:version => 20120903001932) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "histories", :force => true do |t|
-    t.string   "window"
-    t.string   "process"
+    t.text     "window"
+    t.text     "process"
     t.datetime "time"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "machine_id"
   end
+
+  add_index "histories", ["machine_id"], :name => "index_histories_on_machine_id"
+  add_index "histories", ["process"], :name => "index_histories_on_process"
+  add_index "histories", ["time"], :name => "index_histories_on_time"
+  add_index "histories", ["window"], :name => "index_histories_on_window"
 
   create_table "locations", :force => true do |t|
     t.string   "name"
@@ -87,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20120903001932) do
     t.string   "username"
     t.integer  "item"
     t.string   "table"
-    t.integer  "month",      :limit => 2
+    t.integer  "month"
     t.integer  "year",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
@@ -116,8 +124,8 @@ ActiveRecord::Schema.define(:version => 20120903001932) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                                 :null => false
+    t.string   "encrypted_password",                    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -126,8 +134,8 @@ ActiveRecord::Schema.define(:version => 20120903001932) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

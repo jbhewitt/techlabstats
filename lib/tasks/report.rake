@@ -3,7 +3,7 @@ namespace :report do
 
   task :monthly_average_session_usage => :environment do
     today = DateTime.now
-    today = DateTime.civil(2012,8,20,0,0,0,0)
+    #today = DateTime.civil(2012,8,20,0,0,0,0)
     target_month = today - 7
 
     machines = Machine.find(:all)
@@ -31,12 +31,57 @@ namespace :report do
     #end
   end
 
+
+    task :monthly_app_time_class => :environment do
+    puts '-= generating monthly app report =-'
+    
+    today = DateTime.now
+    #today = DateTime.civil(2012,8,20,0,0,0,0)
+    target_month = today - 10
+    #today = today - 2
+    #today = Chronic.parse('2012-09-13')
+    machines = Machine.find(:all)
+
+    puts "Month Number #{target_month.month}"
+    total_usage = Hash.new
+    machines.each_with_index do |machine, index|
+      monthly_usage = machine.gen_monthly_average_usage_classification(target_month)
+      process_usage = monthly_usage['process']
+      idle_usage = monthly_usage['total_user_sessions']
+      puts "#{machine.name} - month #{target_month.month} - #{idle_usage}"              
+      
+      process_usage.each do |usage|
+        #usage.pry
+        process_name = usage[0].to_s.downcase
+        #usage.pry
+          total_usage[process_name] =  total_usage[process_name].to_i + usage[1].to_i
+        #end
+      end      
+    end
+
+    # spreadsheet startup
+    Spreadsheet.client_encoding = 'UTF-8'
+    book = Spreadsheet::Workbook.new
+    sheet = Hash.new
+    sheet1 = book.create_worksheet :name => 'TOTAL APPLICATION TIME'
+    total_usage.each_with_index do |usage, index|
+      puts "#{index} | #{usage[0]} - #{usage[1]}"
+      row = index + 3
+      process_name = usage[0]
+      usage_mins = usage[1]
+      sheet1[row,0] = process_name
+      sheet1[row,1] = usage_mins
+    end
+    #total_usage.pry
+    book.write "#{Rails.root}/public/reports/TECHLAB-APPTIME-#{target_month.cwyear}-MONTH#{target_month.month}.xls"
+  end
+
   task :monthly_app_time => :environment do
     puts '-= generating monthly app report =-'
     
     today = DateTime.now
-    today = DateTime.civil(2012,8,20,0,0,0,0)
-    target_month = today - 7 
+    #today = DateTime.civil(2012,8,20,0,0,0,0)
+    target_month = today - 10
     #today = today - 2
     #today = Chronic.parse('2012-09-13')
     machines = Machine.find(:all)

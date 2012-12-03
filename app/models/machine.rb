@@ -9,10 +9,9 @@ class Machine < ActiveRecord::Base
   has_many :daily_usages
 
 
- def gen_monthly_average_usage(month)
+def gen_monthly_average_usage_classification(month)
     min_idle_minutes = 5
     min_process_minutes = 8
-
     start_datetime = month.beginning_of_month
     end_datetime = month.end_of_month
 
@@ -39,12 +38,77 @@ class Machine < ActiveRecord::Base
           process_count = 0
         end
       end
-      #record total minutes for all processes
-      process_name = history.process.split('\\').last
-      if process_minutes[process_name].nil?
-        process_minutes[process_name] = 1
+      
+      #search classification namme
+      #process_name = history.process.split('\\').last
+      app = Application.find_by_process(history.process) 
+      if app.classification.nil?
+        classification_name = "UNKNOWN"
       else
-        process_minutes[process_name] += 1 
+        classification_name = app.classification.name
+      end
+
+      if process_minutes[classification_name].nil?
+        process_minutes[classification_name] = 1
+      else
+        process_minutes[classification_name] += 1 
+      end
+      
+    end
+
+    #total_user_sessions.pry
+    #histories.pry
+    #process_minutes.pry
+    returnit = Hash.new
+    returnit['user_sessions'] = total_user_sessions
+    returnit['process'] = process_minutes.sort_by {|key,value| value}
+
+    return (returnit)
+  end
+
+
+
+
+ def gen_monthly_average_usage(month)
+    min_idle_minutes = 5
+    min_process_minutes = 8
+
+    start_datetime = month.beginning_of_month
+    end_datetime = month.end_of_month
+
+    histories = History.where(:machine_id => self.id, :time => start_datetime..end_datetime).all
+
+    total_user_sessions = 0
+    total_idle_count = 0
+    idle_count = 0
+    process_count = 0
+    previous_idle = 0
+    process_minutes = Hash.new
+
+#    histories.pry
+
+    histories.each do |history|
+      if history.process == 'IDLE'        
+        previous_idle = 1
+        idle_count = idle_count + 1      
+      else 
+        #not idle - so it's another process
+        previous_idle = 0 
+        process_count = process_count + 1 
+        if (process_count >= min_process_minutes) && (idle_count >= min_idle_minutes)
+          total_user_sessions = total_user_sessions + 1
+          process_count = 0
+        end
+      end
+      #record total minutes for all processes
+
+      if !history.process.nil?
+        process_name = history.process.split('\\').last
+        if process_minutes[process_name].nil?
+          process_minutes[process_name] = 1
+        else
+          process_minutes[process_name] += 1 
+        end
       end
       
     end
@@ -139,13 +203,15 @@ class Machine < ActiveRecord::Base
         end
       end
       #record total minutes for all processes
-      process_name = history.process.split('\\').last
-      if process_minutes[process_name].nil?
-        process_minutes[process_name] = 1
-      else
-        process_minutes[process_name] += 1 
-      end
+      if !history.process.nil?
+        process_name = history.process.split('\\').last
 
+        if process_minutes[process_name].nil?
+          process_minutes[process_name] = 1
+        else
+          process_minutes[process_name] += 1 
+        end
+      end
       
     end
 
